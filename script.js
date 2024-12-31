@@ -1,4 +1,3 @@
-
 // Update progress
 function updateProgress(newProgress, message) {
     const progressBar = document.getElementById('progress-bar');
