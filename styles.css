@@ -1,46 +1,61 @@
 body {
     font-family: 'Roboto', sans-serif;
     text-align: center;
-    margin: 20px;
-    background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
+    margin: 0;
+    background: linear-gradient(to bottom, #ffebcd, #ffa07a); /* Naruto-inspired colors */
     color: #333;
 }
 
 #progress-container {
     width: 80%;
     max-width: 600px;
-    background: #ccc;
+    background: #f4f4f4;
     margin: 20px auto;
     border-radius: 25px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 2px solid #FFA500; /* Orange border */
 }
 
 #progress-bar {
     height: 30px;
     width: 0%;
-    background: linear-gradient(to right, #4caf50, #81c784);
+    background: linear-gradient(to right, #FFA500, #4682B4); /* Orange to Blue */
     line-height: 30px;
     color: white;
     text-align: center;
     transition: width 0.8s ease-in-out;
-    border-radius: 25px 0 0 25px;
 }
 
 #progress-text {
     margin-top: 10px;
-    font-size: 1.2em;
+    font-size: 1.4em;
+    font-weight: bold;
     color: #333;
 }
 
 #message-text {
-    margin-top: 20px;
-    font-size: 1.1em;
-    font-weight: bold;
+    margin-top: 5px;
+    font-size: 1.2em;
+    font-style: italic;
     color: #555;
 }
 
+.scroll {
+    width: 80%;
+    margin: 10px auto;
+    padding: 15px;
+    background: #fffbe0;
+    border-radius: 10px;
+    border: 2px solid #8b4513;
+    font-family: 'Noto Sans JP', sans-serif;
+    text-align: left;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
 h1 {
-    font-size: 2em;
-    margin-bottom: 20px;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 2.5em;
+    color: #FF4500; /* Naruto orange */
+    text-shadow: 2px 2px #000; /* Shadow */
 }
