@@ -1,28 +1,46 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     text-align: center;
     margin: 20px;
-    background-color: #f0f0f0;
+    background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
+    color: #333;
 }
 
 #progress-container {
     width: 80%;
-    background: #e0e0e0;
+    max-width: 600px;
+    background: #ccc;
     margin: 20px auto;
-    border-radius: 10px;
+    border-radius: 25px;
     overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 #progress-bar {
     height: 30px;
     width: 0%;
-    background: #4caf50;
+    background: linear-gradient(to right, #4caf50, #81c784);
     line-height: 30px;
     color: white;
     text-align: center;
-    transition: width 0.5s;
+    transition: width 0.8s ease-in-out;
+    border-radius: 25px 0 0 25px;
 }
 
 #progress-text {
+    margin-top: 10px;
     font-size: 1.2em;
+    color: #333;
+}
+
+#message-text {
+    margin-top: 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #555;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
 }
