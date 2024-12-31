@@ -4,7 +4,7 @@ function updateProgress(newProgress, message) {
     const progressText = document.getElementById('progress-text');
     const messageText = document.getElementById('message-text');
 
-    // Fortschrittsbalken und Text aktualisieren
+    // Fortschrittsbalken und Texte aktualisieren
     progressBar.style.width = `${newProgress}%`;
     progressText.innerText = `${newProgress}% abgeschlossen`;
     messageText.innerText = `Änderungen: ${message}`;
