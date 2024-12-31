@@ -1,11 +1,13 @@
-
 // Fortschritt aktualisieren
 function updateProgress(newProgress, message) {
     const progressBar = document.getElementById('progress-bar');
     const progressText = document.getElementById('progress-text');
-    
+    const messageText = document.getElementById('message-text');
+
+    // Fortschrittsbalken und Text aktualisieren
     progressBar.style.width = `${newProgress}%`;
-    progressText.innerText = `${newProgress}% abgeschlossen - ${message}`;
+    progressText.innerText = `${newProgress}% abgeschlossen`;
+    messageText.innerText = `Änderungen: ${message}`;
 }
 
 // JSON-Datei laden und Fortschritt anzeigen
