@@ -1,12 +1,6 @@
 const container = document.getElementById("arrayContainer");
 
-function generateArray() {
-    const array = [];
-    for (let i = 0; i < 5; i++) {
-        array.push(Math.floor(Math.random() * 90) + 10);
-    }
-    return array;
-}
+const fixedArray = [29, 10, 14, 37, 13]; // feste Zahlen wie im Java-Code
 
 function renderArray(array, highlights = {}, sortedIndex = -1) {
     container.innerHTML = "";
@@ -28,13 +22,13 @@ function renderArray(array, highlights = {}, sortedIndex = -1) {
 }
 
 async function startSort() {
-    const zahl = generateArray();
+    const zahl = [...fixedArray]; // kopieren, um Original zu behalten
     let i = 0, j = 0, zwischenspeicher = 0, anzahl = zahl.length;
 
     for (i = 0; i < anzahl - 1; i++) {
         for (j = 0; j < anzahl - i - 1; j++) {
             renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i);
-            await new Promise(resolve => setTimeout(resolve, 700));
+            await new Promise(resolve => setTimeout(resolve, 1200));
 
             if (zahl[j] > zahl[j + 1]) {
                 zwischenspeicher = zahl[j];

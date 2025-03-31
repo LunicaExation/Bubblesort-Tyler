@@ -2,13 +2,34 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Bubble Sort Visualisierung</title>
+    <title>Bubble Sort - Java Beispiel</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Bubble Sort Animation</h1>
-    <div class="container" id="arrayContainer"></div>
+    <h1>Bubble Sort – Java-Code & Visualisierung</h1>
+
+    <div class="code-section">
+        <h2>Java Code</h2>
+        <pre><code>
+public void sortierenBubbleSort(){
+    int i = 0, j = 0, zwischenspeicher = 0, anzahl = 0;
+    anzahl = zahl.length;
+    for(i = 0; i < anzahl - 1; i++){
+        for(j = 0; j < anzahl - i - 1; j++){
+            if (zahl[j] > zahl[j + 1]){
+                zwischenspeicher = zahl[j];
+                zahl[j] = zahl[j + 1];
+                zahl[j + 1] = zwischenspeicher;
+            }
+        }
+    }
+}
+        </code></pre>
+    </div>
+
     <button onclick="startSort()">Start</button>
+    <div class="container" id="arrayContainer"></div>
+
     <script src="script.js"></script>
 </body>
 </html>
