@@ -11,7 +11,7 @@ function renderArray(array, highlights = {}, sortedIndex = -1) {
     container.innerHTML = "";
     array.forEach((value, index) => {
         const bar = document.createElement("div");
-        bar.className = "bar";
+        bar.className = "bubble";
         bar.style.height = value * 3 + "px";
         bar.textContent = value;
 
@@ -206,7 +206,7 @@ renderArray = function(array, highlights = {}, sortedIndex = -1) {
     updateArrayTable(array);
     array.forEach((value, index) => {
         const bar = document.createElement("div");
-        bar.className = "bar";
+        bar.className = "bubble";
         bar.style.height = value * 3 + "px";
         bar.textContent = value;
 

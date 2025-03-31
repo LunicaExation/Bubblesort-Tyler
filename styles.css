@@ -114,36 +114,54 @@ pre {
     gap: 10px;
 }
 
-.variables {
+.container {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin: 20px auto;
+    align-items: flex-end;
+    height: 300px;
+    margin: 30px auto;
+    gap: 20px;
 }
 
-.variables div {
-    background-color: #ffffff;
-    border: 2px solid #bdc3c7;
-    padding: 10px 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+.bubble {
+    width: 50px;
+    height: 50px;
+    background-color: #3498db;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-weight: bold;
-    font-size: 16px;
-    min-width: 100px;
-    text-align: center;
+    transition: all 0.8s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.bubble.comparing {
+    background-color: #f39c12;
+}
+
+.bubble.sorted {
+    background-color: #27ae60;
 }
 
 .array-table {
-    margin: 10px auto 30px auto;
     font-size: 16px;
     font-family: monospace;
     border-collapse: collapse;
+    position: absolute;
+    left: 50px;
+    top: 200px;
 }
 
 .array-table td, .array-table th {
     border: 1px solid #ccc;
-    padding: 8px 12px;
+    padding: 6px 10px;
+    text-align: left;
+}
+
+.array-table tr {
+    display: table-row;
 }
 
 .array-table th {
@@ -152,12 +170,12 @@ pre {
 
 body::before {
     content: "";
-    background-image: url('https://i.imgur.com/6YZ5aYF.png');  /* Beispiel-Sticker */
-    background-size: 200px;
-    background-position: bottom left;
+    background-image: url('https://i.imgur.com/hX2YFhE.jpeg');  /* LeBron James Hintergrund */
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.06;
-    position: absolute;
+    opacity: 0.035;
+    position: fixed;
     top: 0;
     left: 0;
     height: 100%;
