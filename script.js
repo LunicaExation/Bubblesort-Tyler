@@ -7,7 +7,7 @@ function renderArray(array, highlights = {}, sortedIndex = -1) {
     container.innerHTML = "";
     array.forEach((value, index) => {
         const bar = document.createElement("div");
-        bar.classList.add("bar");
+        bar.className = "bar";
         bar.style.height = value * 3 + "px";
         bar.textContent = value;
 
@@ -22,7 +22,7 @@ function renderArray(array, highlights = {}, sortedIndex = -1) {
     });
 }
 
-function highlightCode(line, replacements = {}) {
+function highlightCode(line) {
     const codeLines = [
         "int i = 0, j = 0, zwischenspeicher = 0, anzahl = 0;",
         "anzahl = zahl.length;",
@@ -39,18 +39,11 @@ function highlightCode(line, replacements = {}) {
 
     let output = "";
     for (let i = 0; i < codeLines.length; i++) {
-        let lineText = codeLines[i];
         if (i === line) {
-            output += "<span class='highlight'>" + lineText + "</span>\n";
+            output += "<span class='highlight'>" + codeLines[i] + "</span>\n";
         } else {
-            output += lineText + "\n";
+            output += codeLines[i] + "\n";
         }
-    }
-
-    for (const key in replacements) {
-        const value = replacements[key];
-        const regex = new RegExp(key, "g");
-        output = output.replace(regex, value);
     }
 
     codeDisplay.innerHTML = output;
@@ -64,19 +57,18 @@ async function startSort() {
     highlightCode(1); await delay(1500);
 
     for (i = 0; i < anzahl - 1; i++) {
-        highlightCode(2, { "i": i }); await delay(1500);
+        highlightCode(2); await delay(1200);
         for (j = 0; j < anzahl - i - 1; j++) {
-            highlightCode(3, { "j": j }); await delay(1500);
+            highlightCode(3); await delay(1200);
             renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i);
-
-            highlightCode(4, { "zahl[j]": zahl[j], "zahl[j + 1]": zahl[j + 1] }); await delay(2000);
+            highlightCode(4); await delay(1500);
 
             if (zahl[j] > zahl[j + 1]) {
-                highlightCode(5, { "zwischenspeicher": "⟶ " + zahl[j] }); await delay(1500);
+                highlightCode(5); await delay(1200);
                 zwischenspeicher = zahl[j];
-                highlightCode(6, { "zahl[j]": "⟶ " + zahl[j + 1] }); await delay(1500);
+                highlightCode(6); await delay(1200);
                 zahl[j] = zahl[j + 1];
-                highlightCode(7, { "zahl[j + 1]": "⟶ " + zwischenspeicher }); await delay(1500);
+                highlightCode(7); await delay(1200);
                 zahl[j + 1] = zwischenspeicher;
                 renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i);
             }

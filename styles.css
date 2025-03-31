@@ -1,13 +1,13 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #eef2f7;
+    background-color: #f4f7fb;
     margin: 0;
     padding: 20px;
     text-align: center;
 }
 
 h1, h2 {
-    color: #333;
+    color: #2c3e50;
 }
 
 .container {
@@ -24,16 +24,18 @@ h1, h2 {
     background-color: #3498db;
     color: white;
     text-align: center;
-    border-radius: 5px 5px 0 0;
-    transition: all 1s ease;
+    border-radius: 8px 8px 0 0;
+    transition: all 0.8s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding-top: 5px;
 }
 
 .bar.comparing {
-    background-color: #e74c3c;
+    background-color: #f39c12;
 }
 
 .bar.sorted {
-    background-color: #2ecc71;
+    background-color: #27ae60;
 }
 
 .code-section {
@@ -42,18 +44,19 @@ h1, h2 {
     margin: 0 auto 20px auto;
     text-align: left;
     background: #ffffff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.08);
+    transition: background 0.5s ease;
 }
 
 pre {
     font-family: monospace;
     white-space: pre-wrap;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .highlight {
-    background-color: #ffff99;
-    font-weight: bold;
+    background-color: #ffffaa;
+    transition: background 0.4s ease-in-out;
 }
