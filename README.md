@@ -1,6 +1,6 @@
 # Bubble Sort - Visualisierung
 
-Dieses Projekt zeigt eine visuelle Darstellung des Bubble-Sort-Algorithmus mit HTML, CSS und JavaScript.
+für die gute wif note
 
 ## Java-Äquivalent des Algorithmus
 
