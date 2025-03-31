@@ -117,3 +117,71 @@ async function playSteps() {
         await new Promise(resolve => setTimeout(resolve, 1200));
     }
 }
+
+
+function updateVarsDisplay(i, j, zw, valJ, valJ1) {
+    document.getElementById("varsDisplay").innerHTML = `
+        <div>i = ${i}</div>
+        <div>j = ${j}</div>
+        <div>zwischenspeicher = ${zw !== undefined ? zw : "-"}</div>
+        <div>zahl[j] = ${valJ !== undefined ? valJ : "-"}</div>
+        <div>zahl[j+1] = ${valJ1 !== undefined ? valJ1 : "-"}</div>
+    `;
+}
+
+// Override bubbleSortSteps to add variable tracking
+bubbleSortSteps = function () {
+    steps = [];
+    const zahl = [...fixedArray];
+    let anzahl = zahl.length;
+
+    steps.push(() => {
+        highlightCode(0);
+        renderArray(zahl);
+        updateVarsDisplay(0, 0, "-", "-", "-");
+    });
+    steps.push(() => {
+        highlightCode(1);
+    });
+
+    for (let i = 0; i < anzahl - 1; i++) {
+        steps.push(() => {
+            highlightCode(2);
+            updateVarsDisplay(i, 0);
+        });
+        for (let j = 0; j < anzahl - i - 1; j++) {
+            steps.push(() => {
+                highlightCode(3);
+                renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i);
+                updateVarsDisplay(i, j, "-", zahl[j], zahl[j + 1]);
+            });
+            steps.push(() => {
+                highlightCode(4);
+            });
+            if (zahl[j] > zahl[j + 1]) {
+                steps.push(() => {
+                    highlightCode(5);
+                    updateVarsDisplay(i, j, zahl[j], zahl[j], zahl[j + 1]);
+                });
+                steps.push(() => {
+                    highlightCode(6);
+                });
+                let tmp = zahl[j];
+                zahl[j] = zahl[j + 1];
+                steps.push(() => {
+                    highlightCode(7);
+                    updateVarsDisplay(i, j, tmp, zahl[j], tmp);
+                });
+                zahl[j + 1] = tmp;
+                steps.push(() => {
+                    renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i);
+                });
+            }
+        }
+    }
+    steps.push(() => {
+        highlightCode(10);
+        updateVarsDisplay("-", "-", "-", "-", "-");
+    });
+    steps.push(() => renderArray(zahl, {}, 0));
+}
