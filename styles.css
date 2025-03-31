@@ -113,3 +113,55 @@ pre {
     flex-direction: column;
     gap: 10px;
 }
+
+.variables {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 20px auto;
+}
+
+.variables div {
+    background-color: #ffffff;
+    border: 2px solid #bdc3c7;
+    padding: 10px 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-weight: bold;
+    font-size: 16px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.array-table {
+    margin: 10px auto 30px auto;
+    font-size: 16px;
+    font-family: monospace;
+    border-collapse: collapse;
+}
+
+.array-table td, .array-table th {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+}
+
+.array-table th {
+    background-color: #ecf0f1;
+}
+
+body::before {
+    content: "";
+    background-image: url('https://i.imgur.com/6YZ5aYF.png');  /* Beispiel-Sticker */
+    background-size: 200px;
+    background-position: bottom left;
+    background-repeat: no-repeat;
+    opacity: 0.06;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    z-index: -1;
+}

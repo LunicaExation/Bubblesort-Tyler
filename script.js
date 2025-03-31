@@ -185,3 +185,38 @@ bubbleSortSteps = function () {
     });
     steps.push(() => renderArray(zahl, {}, 0));
 }
+
+
+function updateArrayTable(array) {
+    let html = "<table class='array-table'><tr>";
+    array.forEach((val, i) => {
+        html += "<th>zahl[" + i + "]</th>";
+    });
+    html += "</tr><tr>";
+    array.forEach((val) => {
+        html += "<td>" + val + "</td>";
+    });
+    html += "</tr></table>";
+    document.getElementById("arrayContainer").insertAdjacentHTML("afterbegin", html);
+}
+
+// Override renderArray to add table
+renderArray = function(array, highlights = {}, sortedIndex = -1) {
+    container.innerHTML = "";
+    updateArrayTable(array);
+    array.forEach((value, index) => {
+        const bar = document.createElement("div");
+        bar.className = "bar";
+        bar.style.height = value * 3 + "px";
+        bar.textContent = value;
+
+        if (highlights[index]) {
+            bar.classList.add("comparing");
+        }
+        if (index >= sortedIndex) {
+            bar.classList.add("sorted");
+        }
+
+        container.appendChild(bar);
+    });
+};
