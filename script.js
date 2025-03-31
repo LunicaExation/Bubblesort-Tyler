@@ -3,6 +3,10 @@ const codeDisplay = document.getElementById("javaCode");
 
 const fixedArray = [29, 10, 14, 37, 13];
 
+let sorting = false;
+let currentStep = 0;
+let steps = [];
+
 function renderArray(array, highlights = {}, sortedIndex = -1) {
     container.innerHTML = "";
     array.forEach((value, index) => {
@@ -49,36 +53,67 @@ function highlightCode(line) {
     codeDisplay.innerHTML = output;
 }
 
-async function startSort() {
+function startSort() {
+    if (sorting) return;
+    sorting = true;
+    bubbleSortSteps();
+    playSteps();
+}
+
+function stopSort() {
+    sorting = false;
+}
+
+function stepForward() {
+    if (currentStep < steps.length) {
+        steps[currentStep++]();
+    }
+}
+
+function stepBack() {
+    if (currentStep > 0) {
+        currentStep -= 1;
+        steps[currentStep]();
+    }
+}
+
+function bubbleSortSteps() {
+    steps = [];
     const zahl = [...fixedArray];
-    let i = 0, j = 0, zwischenspeicher = 0, anzahl = zahl.length;
+    let anzahl = zahl.length;
 
-    highlightCode(0); await delay(1500);
-    highlightCode(1); await delay(1500);
+    steps.push(() => {
+        highlightCode(0);
+        renderArray(zahl);
+    });
+    steps.push(() => highlightCode(1));
 
-    for (i = 0; i < anzahl - 1; i++) {
-        highlightCode(2); await delay(1200);
-        for (j = 0; j < anzahl - i - 1; j++) {
-            highlightCode(3); await delay(1200);
-            renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i);
-            highlightCode(4); await delay(1500);
-
-            if (zahl[j] > zahl[j + 1]) {
-                highlightCode(5); await delay(1200);
-                zwischenspeicher = zahl[j];
-                highlightCode(6); await delay(1200);
-                zahl[j] = zahl[j + 1];
-                highlightCode(7); await delay(1200);
-                zahl[j + 1] = zwischenspeicher;
+    for (let i = 0; i < anzahl - 1; i++) {
+        steps.push(() => highlightCode(2));
+        for (let j = 0; j < anzahl - i - 1; j++) {
+            steps.push(() => {
+                highlightCode(3);
                 renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i);
+            });
+            steps.push(() => highlightCode(4));
+            if (zahl[j] > zahl[j + 1]) {
+                steps.push(() => highlightCode(5));
+                steps.push(() => highlightCode(6));
+                let tmp = zahl[j];
+                zahl[j] = zahl[j + 1];
+                steps.push(() => highlightCode(7));
+                zahl[j + 1] = tmp;
+                steps.push(() => renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i));
             }
         }
     }
-
-    renderArray(zahl, {}, 0);
-    highlightCode(10);
+    steps.push(() => highlightCode(10));
+    steps.push(() => renderArray(zahl, {}, 0));
 }
 
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+async function playSteps() {
+    while (currentStep < steps.length && sorting) {
+        steps[currentStep++]();
+        await new Promise(resolve => setTimeout(resolve, 1200));
+    }
 }

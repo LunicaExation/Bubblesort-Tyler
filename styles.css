@@ -47,7 +47,6 @@ h1, h2 {
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 0 20px rgba(0,0,0,0.08);
-    transition: background 0.5s ease;
 }
 
 pre {
@@ -59,4 +58,34 @@ pre {
 .highlight {
     background-color: #ffffaa;
     transition: background 0.4s ease-in-out;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.control-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.control-button.green {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.control-button.red {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.control-button:hover {
+    opacity: 0.9;
 }

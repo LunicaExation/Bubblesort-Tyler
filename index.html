@@ -2,11 +2,11 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Bubble Sort – Visual Code</title>
+    <title>Bubble Sort – Step-by-Step</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Bubble Sort – Java-Code & Animation</h1>
+    <h1>Bubble Sort – Java-Code & Schrittweise Steuerung</h1>
 
     <div class="code-section">
         <h2>Java Code (Live Visualisiert)</h2>
@@ -25,7 +25,13 @@ for (i = 0; i < anzahl - 1; i++) {
         </code></pre>
     </div>
 
-    <button onclick="startSort()">Start</button>
+    <div class="button-row">
+        <button class="control-button" onclick="stepBack()">⏪ Zurück</button>
+        <button class="control-button green" onclick="startSort()">▶️ Start</button>
+        <button class="control-button red" onclick="stopSort()">⏹️ Stop</button>
+        <button class="control-button" onclick="stepForward()">⏩ Weiter</button>
+    </div>
+
     <div class="container" id="arrayContainer"></div>
 
     <script src="script.js"></script>
