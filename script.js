@@ -1,7 +1,7 @@
+
 const container = document.getElementById("arrayContainer");
 const codeDisplay = document.getElementById("javaCode");
-
-const fixedArray = [29, 10, 14, 37, 13];
+const fixedArray = [10, 13, 14, 29, 37];
 
 let sorting = false;
 let currentStep = 0;
@@ -10,19 +10,12 @@ let steps = [];
 function renderArray(array, highlights = {}, sortedIndex = -1) {
     container.innerHTML = "";
     array.forEach((value, index) => {
-        const bar = document.createElement("div");
-        bar.className = "bubble";
-        bar.style.height = value * 3 + "px";
-        bar.textContent = value;
-
-        if (highlights[index]) {
-            bar.classList.add("comparing");
-        }
-        if (index >= sortedIndex) {
-            bar.classList.add("sorted");
-        }
-
-        container.appendChild(bar);
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.textContent = value;
+        if (highlights[index]) bubble.classList.add("comparing");
+        if (index >= sortedIndex) bubble.classList.add("sorted");
+        container.appendChild(bubble);
     });
 }
 
@@ -40,17 +33,29 @@ function highlightCode(line) {
         "    }",
         "}"
     ];
-
     let output = "";
     for (let i = 0; i < codeLines.length; i++) {
-        if (i === line) {
-            output += "<span class='highlight'>" + codeLines[i] + "</span>\n";
-        } else {
-            output += codeLines[i] + "\n";
-        }
+        output += (i === line ? "<span class='highlight'>" : "") +
+                  codeLines[i] +
+                  (i === line ? "</span>" : "") + "\n";
     }
-
     codeDisplay.innerHTML = output;
+}
+
+function updateVarTable(i, j, zw, valJ, valJ1) {
+    const table = `
+        <table class='var-table'>
+            <tr><th>i</th><th>j</th><th>zwischenspeicher</th><th>zahl[j]</th><th>zahl[j+1]</th></tr>
+            <tr>
+                <td>${i ?? "-"}</td>
+                <td>${j ?? "-"}</td>
+                <td>${zw ?? "-"}</td>
+                <td>${valJ ?? "-"}</td>
+                <td>${valJ1 ?? "-"}</td>
+            </tr>
+        </table>
+    `;
+    document.getElementById("varTableContainer").innerHTML = table;
 }
 
 function startSort() {
@@ -60,9 +65,7 @@ function startSort() {
     playSteps();
 }
 
-function stopSort() {
-    sorting = false;
-}
+function stopSort() { sorting = false; }
 
 function stepForward() {
     if (currentStep < steps.length) {
@@ -85,92 +88,33 @@ function bubbleSortSteps() {
     steps.push(() => {
         highlightCode(0);
         renderArray(zahl);
+        updateVarTable(0, 0, "-", "-", "-");
     });
     steps.push(() => highlightCode(1));
 
     for (let i = 0; i < anzahl - 1; i++) {
-        steps.push(() => highlightCode(2));
-        for (let j = 0; j < anzahl - i - 1; j++) {
-            steps.push(() => {
-                highlightCode(3);
-                renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i);
-            });
-            steps.push(() => highlightCode(4));
-            if (zahl[j] > zahl[j + 1]) {
-                steps.push(() => highlightCode(5));
-                steps.push(() => highlightCode(6));
-                let tmp = zahl[j];
-                zahl[j] = zahl[j + 1];
-                steps.push(() => highlightCode(7));
-                zahl[j + 1] = tmp;
-                steps.push(() => renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i));
-            }
-        }
-    }
-    steps.push(() => highlightCode(10));
-    steps.push(() => renderArray(zahl, {}, 0));
-}
-
-async function playSteps() {
-    while (currentStep < steps.length && sorting) {
-        steps[currentStep++]();
-        await new Promise(resolve => setTimeout(resolve, 1200));
-    }
-}
-
-
-function updateVarsDisplay(i, j, zw, valJ, valJ1) {
-    document.getElementById("varsDisplay").innerHTML = `
-        <div>i = ${i}</div>
-        <div>j = ${j}</div>
-        <div>zwischenspeicher = ${zw !== undefined ? zw : "-"}</div>
-        <div>zahl[j] = ${valJ !== undefined ? valJ : "-"}</div>
-        <div>zahl[j+1] = ${valJ1 !== undefined ? valJ1 : "-"}</div>
-    `;
-}
-
-// Override bubbleSortSteps to add variable tracking
-bubbleSortSteps = function () {
-    steps = [];
-    const zahl = [...fixedArray];
-    let anzahl = zahl.length;
-
-    steps.push(() => {
-        highlightCode(0);
-        renderArray(zahl);
-        updateVarsDisplay(0, 0, "-", "-", "-");
-    });
-    steps.push(() => {
-        highlightCode(1);
-    });
-
-    for (let i = 0; i < anzahl - 1; i++) {
         steps.push(() => {
             highlightCode(2);
-            updateVarsDisplay(i, 0);
+            updateVarTable(i, 0);
         });
         for (let j = 0; j < anzahl - i - 1; j++) {
             steps.push(() => {
                 highlightCode(3);
                 renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i);
-                updateVarsDisplay(i, j, "-", zahl[j], zahl[j + 1]);
+                updateVarTable(i, j, "-", zahl[j], zahl[j + 1]);
             });
-            steps.push(() => {
-                highlightCode(4);
-            });
+            steps.push(() => highlightCode(4));
             if (zahl[j] > zahl[j + 1]) {
                 steps.push(() => {
                     highlightCode(5);
-                    updateVarsDisplay(i, j, zahl[j], zahl[j], zahl[j + 1]);
+                    updateVarTable(i, j, zahl[j], zahl[j], zahl[j + 1]);
                 });
-                steps.push(() => {
-                    highlightCode(6);
-                });
+                steps.push(() => highlightCode(6));
                 let tmp = zahl[j];
                 zahl[j] = zahl[j + 1];
                 steps.push(() => {
                     highlightCode(7);
-                    updateVarsDisplay(i, j, tmp, zahl[j], tmp);
+                    updateVarTable(i, j, tmp, zahl[j], tmp);
                 });
                 zahl[j + 1] = tmp;
                 steps.push(() => {
@@ -181,42 +125,14 @@ bubbleSortSteps = function () {
     }
     steps.push(() => {
         highlightCode(10);
-        updateVarsDisplay("-", "-", "-", "-", "-");
+        updateVarTable("-", "-", "-", "-", "-");
     });
     steps.push(() => renderArray(zahl, {}, 0));
 }
 
-
-function updateArrayTable(array) {
-    let html = "<table class='array-table'><tr>";
-    array.forEach((val, i) => {
-        html += "<th>zahl[" + i + "]</th>";
-    });
-    html += "</tr><tr>";
-    array.forEach((val) => {
-        html += "<td>" + val + "</td>";
-    });
-    html += "</tr></table>";
-    document.getElementById("arrayContainer").insertAdjacentHTML("afterbegin", html);
+async function playSteps() {
+    while (currentStep < steps.length && sorting) {
+        steps[currentStep++]();
+        await new Promise(r => setTimeout(r, 1000));
+    }
 }
-
-// Override renderArray to add table
-renderArray = function(array, highlights = {}, sortedIndex = -1) {
-    container.innerHTML = "";
-    updateArrayTable(array);
-    array.forEach((value, index) => {
-        const bar = document.createElement("div");
-        bar.className = "bubble";
-        bar.style.height = value * 3 + "px";
-        bar.textContent = value;
-
-        if (highlights[index]) {
-            bar.classList.add("comparing");
-        }
-        if (index >= sortedIndex) {
-            bar.classList.add("sorted");
-        }
-
-        container.appendChild(bar);
-    });
-};

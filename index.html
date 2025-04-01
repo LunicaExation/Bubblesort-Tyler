@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Bubble Sort – Variablen live</title>
+    <title>Bubble Sort – Variablen & Layout Fix</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -25,23 +25,16 @@ for (i = 0; i < anzahl - 1; i++) {
         </code></pre>
     </div>
 
-    <div class="variables" id="varsDisplay">
-        <div>i = 0</div>
-        <div>j = 0</div>
-        <div>zwischenspeicher = -</div>
-        <div>zahl[j] = -</div>
-        <div>zahl[j+1] = -</div>
-    </div>
-
     <div class="button-group">
         <button onclick="stepBack()">⏪ Zurück</button>
         <div class="middle-buttons">
-            <button class="green" onclick="startSort()">▶️ Start</button>
-            <button class="red" onclick="stopSort()">⏹️ Stop</button>
+            <button class="control-button green" onclick="startSort()">▶️ Start</button>
+            <button class="control-button red" onclick="stopSort()">⏹️ Stop</button>
         </div>
         <button onclick="stepForward()">⏩ Weiter</button>
     </div>
 
+    <div id="varTableContainer"></div>
     <div class="container" id="arrayContainer"></div>
 
     <script src="script.js"></script>
