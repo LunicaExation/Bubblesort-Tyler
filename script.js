@@ -64,7 +64,9 @@ function startSort() {
     playSteps();
 }
 
-function stopSort() { sorting = false; }
+function stopSort() {
+    sorting = false;
+}
 
 function stepForward() {
     if (currentStep < steps.length) steps[currentStep++]();
@@ -90,15 +92,29 @@ function bubbleSortSteps() {
                 renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i);
                 updateVarTable(i, j, "-", zahl[j], zahl[j + 1]);
             });
-            steps.push(() => highlightCode(4));
+            steps.push(() => {
+                highlightCode(4);  // if-Zeile
+                updateVarTable(i, j, "-", zahl[j], zahl[j + 1]);
+            });
             if (zahl[j] > zahl[j + 1]) {
-                steps.push(() => { highlightCode(5); updateVarTable(i, j, zahl[j], zahl[j], zahl[j + 1]); });
                 let tmp = zahl[j];
-                steps.push(() => highlightCode(6));
-                zahl[j] = zahl[j + 1];
-                steps.push(() => { highlightCode(7); updateVarTable(i, j, tmp, zahl[j], tmp); });
-                zahl[j + 1] = tmp;
-                steps.push(() => renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i));
+                steps.push(() => {
+                    highlightCode(5);  // zwischenspeicher = ...
+                    updateVarTable(i, j, tmp, zahl[j], zahl[j + 1]);
+                });
+                steps.push(() => {
+                    highlightCode(6);  // zahl[j] = ...
+                    zahl[j] = zahl[j + 1];
+                    updateVarTable(i, j, tmp, zahl[j], tmp);
+                });
+                steps.push(() => {
+                    highlightCode(7);  // zahl[j+1] = ...
+                    zahl[j + 1] = tmp;
+                    updateVarTable(i, j, tmp, zahl[j], zahl[j + 1]);
+                });
+                steps.push(() => {
+                    renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i);
+                });
             }
         }
     }
