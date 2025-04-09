@@ -1,28 +1,44 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>Bubblesort</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BubbleSort Visualisierung</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <h1>Bubblesort</h1>
-    <div class="code-section">
-        <h2>Java Code</h2>
-        <pre><code id="javaCode"></code></pre>
+  <div class="top-section">
+    <pre id="codeBlock" class="code-area"></pre>
+    <div id="tableContainer">
+      <table id="varTable">
+        <thead>
+          <tr>
+            <th>i</th>
+            <th>j</th>
+            <th>zwischenspeicher</th>
+            <th>zahl[j]</th>
+            <th>zahl[j+1]</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="varValues">
+            <td id="val_i"></td>
+            <td id="val_j"></td>
+            <td id="val_temp"></td>
+            <td id="val_curr"></td>
+            <td id="val_next"></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <div class="button-group">
-        <button onclick="stepBack()">⏪ Zurück</button>
-        <div class="middle-buttons">
-            <button class="control-button green" onclick="startSort()">▶️ Start</button>
-            <button class="control-button red" onclick="stopSort()">⏹️ Stop</button>
-        </div>
-        <button onclick="stepForward()">⏩ Weiter</button>
-    </div>
-
-    <div id="varTableContainer"></div>
-    <div class="container" id="arrayContainer"></div>
-    <script src="script.js"></script>
+  </div>
+  <div id="bubbleContainer"></div>
+  <div id="controls">
+    <button id="prev" class="btn" disabled>Zurück</button>
+    <button id="start" class="btn">Start</button>
+    <button id="stop" class="btn" disabled>Stop</button>
+    <button id="next" class="btn">Weiter</button>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
