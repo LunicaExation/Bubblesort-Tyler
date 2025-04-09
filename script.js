@@ -1,7 +1,7 @@
 
 const container = document.getElementById("arrayContainer");
 const codeDisplay = document.getElementById("javaCode");
-const fixedArray = [10, 13, 14, 29, 37];
+const fixedArray = [1510, 143, 14, 29, 327];
 let sorting = false;
 let currentStep = 0;
 let steps = [];
