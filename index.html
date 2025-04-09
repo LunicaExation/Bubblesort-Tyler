@@ -2,29 +2,15 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Bubble Sort von Tyler</title>
+    <title>Bubblesort</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Bubble Sort – Java-Code & Variablenanzeige</h1>
-
+    <h1>Bubblesort</h1>
     <div class="code-section">
         <h2>Java Code (Live Visualisiert)</h2>
-        <pre><code id="javaCode">
-int i = 0, j = 0, zwischenspeicher = 0, anzahl = 0;
-anzahl = zahl.length;
-for (i = 0; i < anzahl - 1; i++) {
-    for (j = 0; j < anzahl - i - 1; j++) {
-        if (zahl[j] > zahl[j + 1]) {
-            zwischenspeicher = zahl[j];
-            zahl[j] = zahl[j + 1];
-            zahl[j + 1] = zwischenspeicher;
-        }
-    }
-}
-        </code></pre>
+        <pre><code id="javaCode"></code></pre>
     </div>
-
     <div class="button-group">
         <button onclick="stepBack()">⏪ Zurück</button>
         <div class="middle-buttons">
@@ -33,10 +19,8 @@ for (i = 0; i < anzahl - 1; i++) {
         </div>
         <button onclick="stepForward()">⏩ Weiter</button>
     </div>
-
     <div id="varTableContainer"></div>
     <div class="container" id="arrayContainer"></div>
-
     <script src="script.js"></script>
 </body>
 </html>

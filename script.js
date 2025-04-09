@@ -2,7 +2,6 @@
 const container = document.getElementById("arrayContainer");
 const codeDisplay = document.getElementById("javaCode");
 const fixedArray = [10, 13, 14, 29, 37];
-
 let sorting = false;
 let currentStep = 0;
 let steps = [];
@@ -68,16 +67,11 @@ function startSort() {
 function stopSort() { sorting = false; }
 
 function stepForward() {
-    if (currentStep < steps.length) {
-        steps[currentStep++]();
-    }
+    if (currentStep < steps.length) steps[currentStep++]();
 }
 
 function stepBack() {
-    if (currentStep > 0) {
-        currentStep -= 1;
-        steps[currentStep]();
-    }
+    if (currentStep > 0) steps[--currentStep]();
 }
 
 function bubbleSortSteps() {
@@ -85,18 +79,11 @@ function bubbleSortSteps() {
     const zahl = [...fixedArray];
     let anzahl = zahl.length;
 
-    steps.push(() => {
-        highlightCode(0);
-        renderArray(zahl);
-        updateVarTable(0, 0, "-", "-", "-");
-    });
+    steps.push(() => { highlightCode(0); renderArray(zahl); updateVarTable(0, 0, "-", "-", "-"); });
     steps.push(() => highlightCode(1));
 
     for (let i = 0; i < anzahl - 1; i++) {
-        steps.push(() => {
-            highlightCode(2);
-            updateVarTable(i, 0);
-        });
+        steps.push(() => { highlightCode(2); updateVarTable(i, 0); });
         for (let j = 0; j < anzahl - i - 1; j++) {
             steps.push(() => {
                 highlightCode(3);
@@ -105,28 +92,17 @@ function bubbleSortSteps() {
             });
             steps.push(() => highlightCode(4));
             if (zahl[j] > zahl[j + 1]) {
-                steps.push(() => {
-                    highlightCode(5);
-                    updateVarTable(i, j, zahl[j], zahl[j], zahl[j + 1]);
-                });
-                steps.push(() => highlightCode(6));
+                steps.push(() => { highlightCode(5); updateVarTable(i, j, zahl[j], zahl[j], zahl[j + 1]); });
                 let tmp = zahl[j];
+                steps.push(() => highlightCode(6));
                 zahl[j] = zahl[j + 1];
-                steps.push(() => {
-                    highlightCode(7);
-                    updateVarTable(i, j, tmp, zahl[j], tmp);
-                });
+                steps.push(() => { highlightCode(7); updateVarTable(i, j, tmp, zahl[j], tmp); });
                 zahl[j + 1] = tmp;
-                steps.push(() => {
-                    renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i);
-                });
+                steps.push(() => renderArray(zahl, { [j]: true, [j + 1]: true }, anzahl - i));
             }
         }
     }
-    steps.push(() => {
-        highlightCode(10);
-        updateVarTable("-", "-", "-", "-", "-");
-    });
+    steps.push(() => { highlightCode(10); updateVarTable("-", "-", "-", "-", "-"); });
     steps.push(() => renderArray(zahl, {}, 0));
 }
 
