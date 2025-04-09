@@ -64,9 +64,14 @@ function updateVarTable(i, j, zw, valJ, valJ1) {
 }
 
 function startSort() {
-    sorting = true;
-    currentStep = 0;
+    stopSort();
+    zahl = generateNewArray();
+    renderArray(zahl);
+    highlightCode(2);
+    updateVarTable(0, 0, "-", "-", "-");
     bubbleSortSteps();
+    currentStep = 0;
+    sorting = true;
     playSteps();
 }
 
@@ -137,5 +142,5 @@ document.addEventListener("DOMContentLoaded", () => {
     renderArray(zahl);
     highlightCode(2);
     updateVarTable(0, 0, "-", "-", "-");
-    bubbleSortSteps(); // Steps vorbereiten für sofortiges manuelles Weiterklicken
+    bubbleSortSteps();
 });
