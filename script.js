@@ -1,10 +1,14 @@
 
 const container = document.getElementById("arrayContainer");
 const codeDisplay = document.getElementById("javaCode");
-let zahl = Array.from({ length: 5 }, () => Math.floor(Math.random() * 900 + 100));
+let zahl = [];
 let sorting = false;
 let currentStep = 0;
 let steps = [];
+
+function generateNewArray() {
+    return Array.from({ length: 5 }, () => Math.floor(Math.random() * 900 + 100));
+}
 
 function renderArray(array, highlights = {}, sortedIndex = -1) {
     container.innerHTML = "";
@@ -60,8 +64,12 @@ function updateVarTable(i, j, zw, valJ, valJ1) {
 }
 
 function startSort() {
-    if (sorting) return;
     sorting = true;
+    currentStep = 0;
+    zahl = generateNewArray();
+    renderArray(zahl);
+    highlightCode(2);
+    updateVarTable(0, 0, "-", "-", "-");
     bubbleSortSteps();
     playSteps();
 }
@@ -129,7 +137,8 @@ async function playSteps() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    highlightCode(2);
+    zahl = generateNewArray();
     renderArray(zahl);
+    highlightCode(2);
     updateVarTable(0, 0, "-", "-", "-");
 });
