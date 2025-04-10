@@ -61,10 +61,8 @@ function generateSteps() {
       if (a[j] > a[j + 1]) {
         temp = a[j];
         addStep("swap1", i, j, temp, a);
-        a[j] = a[j + 1];
+        [a[j], a[j + 1]] = [a[j + 1], a[j]];
         addStep("swap2", i, j, temp, a);
-        a[j + 1] = temp;
-        addStep("swap3", i, j, temp, a);
       }
     }
   }
@@ -77,8 +75,7 @@ function updateStep(step) {
     line: 5,
     compare: 6,
     swap1: 7,
-    swap2: 8,
-    swap3: 9
+    swap2: 9
   };
   const codeLine = lineMap[step.type];
   const lineEl = document.getElementById("code-line-" + codeLine);
@@ -90,22 +87,26 @@ function updateStep(step) {
   val_curr.textContent = step.j != null ? step.array[step.j] : "-";
   val_next.textContent = step.j != null ? step.array[step.j + 1] : "-";
 
-  step.array.forEach((val, i) => {
-    bubbles[i].textContent = val;
+  // Update Bubbles position
+  step.array.forEach((_, i) => {
+    bubbles[i].style.left = (i * 70) + "px";
   });
 
-  // animate visual bubble positions
-  for (let i = 0; i < bubbles.length; i++) {
-    bubbles[i].style.left = (i * 70) + "px";
+  // Swap DOM elements only on swap2
+  if (step.type === "swap2") {
+    const j = step.j;
+    const tmp = bubbles[j];
+    bubbles[j] = bubbles[j + 1];
+    bubbles[j + 1] = tmp;
+
+    // Also move visually
+    bubbles[j].style.left = (j * 70) + "px";
+    bubbles[j + 1].style.left = ((j + 1) * 70) + "px";
   }
 
-  if (step.type === "swap3") {
-    const j = step.j;
-    if (j != null) {
-      const tempBubble = bubbles[j];
-      bubbles[j] = bubbles[j + 1];
-      bubbles[j + 1] = tempBubble;
-    }
+  // Update only after swap visually completed
+  for (let i = 0; i < bubbles.length; i++) {
+    bubbles[i].textContent = step.array[i];
   }
 }
 
@@ -118,7 +119,7 @@ document.getElementById("start").onclick = () => {
       clearInterval(timer);
       timer = null;
     }
-  }, 700);
+  }, 800);
 };
 
 document.getElementById("stop").onclick = () => {
