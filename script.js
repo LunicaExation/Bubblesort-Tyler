@@ -55,15 +55,15 @@ function generateSteps() {
   let a = [...arr];
   let temp;
   for (let i = 0; i < a.length - 1; i++) {
-    addStep("line", i, null, null, a);
+    addStep("line", i, null, null, a);  // for i
     for (let j = 0; j < a.length - i - 1; j++) {
-      addStep("compare", i, j, null, a);
+      addStep("compare", i, j, null, a); // if
       if (a[j] > a[j + 1]) {
         temp = a[j];
-        addStep("set_temp", i, j, temp, a);   // highlight zwischenspeicher = zahl[j];
-        addStep("assign1", i, j, temp, a);    // highlight zahl[j] = zahl[j+1];
+        addStep("highlight_temp", i, j, temp, a);     // zwischenspeicher = zahl[j]
+        addStep("highlight_assign1", i, j, temp, a);  // zahl[j] = zahl[j+1]
         [a[j], a[j + 1]] = [a[j + 1], a[j]];
-        addStep("assign2", i, j, temp, a);    // highlight zahl[j+1] = zwischenspeicher;
+        addStep("highlight_assign2", i, j, temp, a);  // zahl[j+1] = zwischenspeicher
       }
     }
   }
@@ -76,9 +76,9 @@ function updateStep(step) {
   const lineMap = {
     line: 5,
     compare: 6,
-    set_temp: 7,
-    assign1: 8,
-    assign2: 9
+    highlight_temp: 7,
+    highlight_assign1: 8,
+    highlight_assign2: 9
   };
 
   const codeLine = lineMap[step.type];
@@ -91,13 +91,12 @@ function updateStep(step) {
   val_curr.textContent = step.j != null ? step.array[step.j] : "-";
   val_next.textContent = step.j != null ? step.array[step.j + 1] : "-";
 
-  // Update Bubbles visual order
   step.array.forEach((val, i) => {
     bubbles[i].textContent = val;
     bubbles[i].style.left = (i * 70) + "px";
   });
 
-  if (step.type === "assign2") {
+  if (step.type === "highlight_assign2") {
     const j = step.j;
     const tmp = bubbles[j];
     bubbles[j] = bubbles[j + 1];
