@@ -1,5 +1,21 @@
 
-const codeLines = ['public class BubbleSort {', '    public void sortierenBubbleSort() {', '        int i = 0, j = 0, zwischenspeicher = 0, anzahl = 0;', '        anzahl = zahl.length;', '        for (i = 0; i < anzahl - 1; i++) {', '            for (j = 0; j < anzahl - i - 1; j++) {', '                if (zahl[j] > zahl[j + 1]) {', '                    zwischenspeicher = zahl[j];', '                    zahl[j] = zahl[j + 1];', '                    zahl[j + 1] = zwischenspeicher;', '                }', '            }', '        }', '    }', '}'];
+const codeLines = [
+  "public class BubbleSort {",
+  "    public void sortierenBubbleSort() {",
+  "        int i = 0, j = 0, zwischenspeicher = 0, anzahl = 0;",
+  "        anzahl = zahl.length;",
+  "        for (i = 0; i < anzahl - 1; i++) {",
+  "            for (j = 0; j < anzahl - i - 1; j++) {",
+  "                if (zahl[j] > zahl[j + 1]) {",
+  "                    zwischenspeicher = zahl[j];",
+  "                    zahl[j] = zahl[j + 1];",
+  "                    zahl[j + 1] = zwischenspeicher;",
+  "                }",
+  "            }",
+  "        }",
+  "    }",
+  "}"
+];
 const codeBlock = document.getElementById("codeBlock");
 codeLines.forEach((line, i) => {
   const div = document.createElement("div");
@@ -7,69 +23,119 @@ codeLines.forEach((line, i) => {
   div.id = "code-line-" + (i + 1);
   codeBlock.appendChild(div);
 });
-const arr = Array.from({ length: 5 }, () => Math.floor(Math.random() * 500 + 100));
+
+const arr = Array.from({ length: 5 }, () => Math.floor(Math.random() * 900 + 100));
 const container = document.getElementById("bubbleContainer");
 const bubbles = [];
 arr.forEach((val, idx) => {
   const b = document.createElement("div");
   b.className = "bubble";
+  b.style.left = (idx * 70) + "px";
   b.style.background = ["#e74c3c","#f39c12","#2ecc71","#3498db","#9b59b6"][idx % 5];
   b.textContent = val;
   container.appendChild(b);
   bubbles.push(b);
 });
-const tableVals = {
-  i: document.getElementById("val_i"),
-  j: document.getElementById("val_j"),
-  temp: document.getElementById("val_temp"),
-  curr: document.getElementById("val_curr"),
-  next: document.getElementById("val_next"),
-};
-let steps = [], current = 0;
-function addStep(line, i, j, temp, a) {
-  steps.push({ line, i, j, temp, a: [...a] });
+
+const val_i = document.getElementById("val_i");
+const val_j = document.getElementById("val_j");
+const val_temp = document.getElementById("val_temp");
+const val_curr = document.getElementById("val_curr");
+const val_next = document.getElementById("val_next");
+
+let steps = [], current = 0, timer = null;
+
+function addStep(type, i, j, temp, arrayState) {
+  steps.push({ type, i, j, temp, array: [...arrayState] });
 }
+
 function generateSteps() {
-  let a = [...arr], n = a.length, temp;
-  for (let i = 0; i < n - 1; i++) {
-    addStep(5, i);
-    for (let j = 0; j < n - i - 1; j++) {
-      addStep(6, i, j);
+  let a = [...arr];
+  let temp;
+  for (let i = 0; i < a.length - 1; i++) {
+    addStep("line", i, null, null, a); // Zeile 5
+    for (let j = 0; j < a.length - i - 1; j++) {
+      addStep("compare", i, j, null, a); // Zeile 6, 7
       if (a[j] > a[j + 1]) {
-        temp = a[j]; addStep(7, i, j, temp);
-        a[j] = a[j + 1]; addStep(8, i, j, temp);
-        a[j + 1] = temp; addStep(9, i, j, temp);
+        temp = a[j];
+        addStep("swap1", i, j, temp, a);
+        a[j] = a[j + 1];
+        addStep("swap2", i, j, temp, a);
+        a[j + 1] = temp;
+        addStep("swap3", i, j, temp, a);
       }
     }
   }
-} generateSteps();
-function update() {
-  document.querySelectorAll('.highlight').forEach(e => e.classList.remove('highlight'));
-  const s = steps[current];
-  document.getElementById("code-line-" + s.line)?.classList.add("highlight");
-  tableVals.i.textContent = s.i ?? "-";
-  tableVals.j.textContent = s.j ?? "-";
-  tableVals.temp.textContent = s.temp ?? "-";
-  tableVals.curr.textContent = s.j != null ? s.a[s.j] : "-";
-  tableVals.next.textContent = s.j != null ? s.a[s.j+1] : "-";
-  s.a.forEach((v, i) => bubbles[i].textContent = v);
 }
-document.getElementById("next").onclick = () => {
-  if (current < steps.length - 1) { current++; update(); }
-};
-document.getElementById("prev").onclick = () => {
-  if (current > 0) { current--; update(); }
-};
-let timer = null;
+
+generateSteps();
+
+function updateStep(step) {
+  document.querySelectorAll('.highlight').forEach(e => e.classList.remove('highlight'));
+  const lineMap = {
+    line: 5,
+    compare: 6,
+    swap1: 7,
+    swap2: 8,
+    swap3: 9
+  };
+  const codeLine = lineMap[step.type];
+  const lineEl = document.getElementById("code-line-" + codeLine);
+  if (lineEl) lineEl.classList.add("highlight");
+
+  val_i.textContent = step.i ?? "-";
+  val_j.textContent = step.j ?? "-";
+  val_temp.textContent = step.temp ?? "-";
+  val_curr.textContent = step.j != null ? step.array[step.j] : "-";
+  val_next.textContent = step.j != null ? step.array[step.j + 1] : "-";
+
+  // Update Bubble contents
+  step.array.forEach((val, i) => {
+    bubbles[i].textContent = val;
+  });
+
+  // Animate swaps by updating their left positions
+  if (step.type === "swap3") {
+    let j = step.j;
+    if (j != null) {
+      // swap DOM order + animate
+      let tmp = bubbles[j];
+      bubbles[j] = bubbles[j + 1];
+      bubbles[j + 1] = tmp;
+
+      bubbles[j].style.left = (j * 70) + "px";
+      bubbles[j + 1].style.left = ((j + 1) * 70) + "px";
+    }
+  }
+}
+
 document.getElementById("start").onclick = () => {
   if (timer) return;
   timer = setInterval(() => {
-    if (current < steps.length - 1) { current++; update(); }
-    else clearInterval(timer);
+    if (current < steps.length) {
+      updateStep(steps[current++]);
+    } else {
+      clearInterval(timer);
+      timer = null;
+    }
   }, 700);
 };
+
 document.getElementById("stop").onclick = () => {
   clearInterval(timer);
   timer = null;
 };
-update();
+
+document.getElementById("next").onclick = () => {
+  if (current < steps.length) {
+    updateStep(steps[current++]);
+  }
+};
+
+document.getElementById("prev").onclick = () => {
+  if (current > 0) {
+    updateStep(steps[--current]);
+  }
+};
+
+updateStep(steps[0]);
