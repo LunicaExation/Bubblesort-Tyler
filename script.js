@@ -60,9 +60,10 @@ function generateSteps() {
       addStep("compare", i, j, null, a);
       if (a[j] > a[j + 1]) {
         temp = a[j];
-        addStep("swap1", i, j, temp, a);
+        addStep("set_temp", i, j, temp, a);   // highlight zwischenspeicher = zahl[j];
+        addStep("assign1", i, j, temp, a);    // highlight zahl[j] = zahl[j+1];
         [a[j], a[j + 1]] = [a[j + 1], a[j]];
-        addStep("swap2", i, j, temp, a);
+        addStep("assign2", i, j, temp, a);    // highlight zahl[j+1] = zwischenspeicher;
       }
     }
   }
@@ -71,12 +72,15 @@ generateSteps();
 
 function updateStep(step) {
   document.querySelectorAll('.highlight').forEach(e => e.classList.remove('highlight'));
+
   const lineMap = {
     line: 5,
     compare: 6,
-    swap1: 7,
-    swap2: 9
+    set_temp: 7,
+    assign1: 8,
+    assign2: 9
   };
+
   const codeLine = lineMap[step.type];
   const lineEl = document.getElementById("code-line-" + codeLine);
   if (lineEl) lineEl.classList.add("highlight");
@@ -87,26 +91,19 @@ function updateStep(step) {
   val_curr.textContent = step.j != null ? step.array[step.j] : "-";
   val_next.textContent = step.j != null ? step.array[step.j + 1] : "-";
 
-  // Update Bubbles position
-  step.array.forEach((_, i) => {
+  // Update Bubbles visual order
+  step.array.forEach((val, i) => {
+    bubbles[i].textContent = val;
     bubbles[i].style.left = (i * 70) + "px";
   });
 
-  // Swap DOM elements only on swap2
-  if (step.type === "swap2") {
+  if (step.type === "assign2") {
     const j = step.j;
     const tmp = bubbles[j];
     bubbles[j] = bubbles[j + 1];
     bubbles[j + 1] = tmp;
-
-    // Also move visually
     bubbles[j].style.left = (j * 70) + "px";
     bubbles[j + 1].style.left = ((j + 1) * 70) + "px";
-  }
-
-  // Update only after swap visually completed
-  for (let i = 0; i < bubbles.length; i++) {
-    bubbles[i].textContent = step.array[i];
   }
 }
 
