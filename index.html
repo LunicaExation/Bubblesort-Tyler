@@ -3,41 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BubbleSort Visualisierung</title>
+  <title>Bubblesort</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="top-section">
-    <pre id="codeBlock" class="code-area">
-<div id="code-line-1">public class BubbleSort {</div>
-<div id="code-line-2">    public void sortierenBubbleSort() {</div>
-<div id="code-line-3">        int i = 0, j = 0, zwischenspeicher = 0, anzahl = 0;</div>
-<div id="code-line-4">        anzahl = zahl.length;</div>
-<div id="code-line-5">        for (i = 0; i < anzahl - 1; i++) {</div>
-<div id="code-line-6">            for (j = 0; j < anzahl - i - 1; j++) {</div>
-<div id="code-line-7">                if (zahl[j] > zahl[j + 1]) {</div>
-<div id="code-line-8">                    zwischenspeicher = zahl[j];</div>
-<div id="code-line-9">                    zahl[j] = zahl[j + 1];</div>
-<div id="code-line-10">                    zahl[j + 1] = zwischenspeicher;</div>
-<div id="code-line-11">                }</div>
-<div id="code-line-12">            }</div>
-<div id="code-line-13">        }</div>
-<div id="code-line-14">    }</div>
-<div id="code-line-15">}</div>
-    </pre>
-    <div id="tableContainer">
-      <table id="varTable">
+  <h1>Bubblesort</h1>
+  <h2>Java Code</h2>
+  <div class="top">
+    <pre id="codeBlock" class="code-area"></pre>
+    <div class="table-area">
+      <table>
         <thead>
-          <tr>
-            <th>i</th>
-            <th>j</th>
-            <th>zwischenspeicher</th>
-            <th>zahl[j]</th>
-            <th>zahl[j+1]</th>
-          </tr>
+          <tr><th>i</th><th>j</th><th>zwischenspeicher</th><th>zahl[j]</th><th>zahl[j+1]</th></tr>
         </thead>
         <tbody>
-          <tr id="varValues">
+          <tr>
             <td id="val_i"></td>
             <td id="val_j"></td>
             <td id="val_temp"></td>
@@ -49,11 +29,11 @@
     </div>
   </div>
   <div id="bubbleContainer"></div>
-  <div id="controls">
-    <button id="prev" class="btn" disabled>Zurück</button>
-    <button id="start" class="btn">Start</button>
-    <button id="stop" class="btn" disabled>Stop</button>
-    <button id="next" class="btn">Weiter</button>
+  <div class="controls">
+    <button id="prev">Zurück</button>
+    <button id="start" class="green">▶ Start</button>
+    <button id="stop" class="red">■ Stop</button>
+    <button id="next">Weiter</button>
   </div>
   <script src="script.js"></script>
 </body>
