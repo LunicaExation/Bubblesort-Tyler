@@ -55,15 +55,16 @@ function generateSteps() {
   let a = [...arr];
   let temp;
   for (let i = 0; i < a.length - 1; i++) {
-    addStep("line", i, null, null, a);  // for i
+    addStep("line", i, null, null, a);
     for (let j = 0; j < a.length - i - 1; j++) {
-      addStep("compare", i, j, null, a); // if
+      addStep("compare", i, j, null, a);
       if (a[j] > a[j + 1]) {
         temp = a[j];
-        addStep("highlight_temp", i, j, temp, a);     // zwischenspeicher = zahl[j]
-        addStep("highlight_assign1", i, j, temp, a);  // zahl[j] = zahl[j+1]
+        addStep("highlight_temp", i, j, temp, a);      // zwischenspeicher = zahl[j]
+        addStep("highlight_assign1", i, j, temp, a);   // zahl[j] = zahl[j+1]
+        addStep("highlight_assign2", i, j, temp, a);   // zahl[j+1] = zwischenspeicher
         [a[j], a[j + 1]] = [a[j + 1], a[j]];
-        addStep("highlight_assign2", i, j, temp, a);  // zahl[j+1] = zwischenspeicher
+        addStep("swap", i, j, temp, a);                // actual visual swap
       }
     }
   }
@@ -78,12 +79,15 @@ function updateStep(step) {
     compare: 6,
     highlight_temp: 7,
     highlight_assign1: 8,
-    highlight_assign2: 9
+    highlight_assign2: 9,
+    swap: null
   };
 
   const codeLine = lineMap[step.type];
-  const lineEl = document.getElementById("code-line-" + codeLine);
-  if (lineEl) lineEl.classList.add("highlight");
+  if (codeLine !== null) {
+    const lineEl = document.getElementById("code-line-" + codeLine);
+    if (lineEl) lineEl.classList.add("highlight");
+  }
 
   val_i.textContent = step.i ?? "-";
   val_j.textContent = step.j ?? "-";
@@ -96,7 +100,7 @@ function updateStep(step) {
     bubbles[i].style.left = (i * 70) + "px";
   });
 
-  if (step.type === "highlight_assign2") {
+  if (step.type === "swap") {
     const j = step.j;
     const tmp = bubbles[j];
     bubbles[j] = bubbles[j + 1];
