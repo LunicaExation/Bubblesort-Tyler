@@ -1,91 +1,44 @@
+
 body {
-  margin: 20px;
   font-family: Arial, sans-serif;
-  background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)),
-              url('lebron.png') no-repeat center center fixed;
-  background-size: cover;
-}
-.top-section {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  margin-bottom: 20px;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 20px;
 }
 .code-area {
-  font-family: "Courier New", Courier, monospace;
-  font-size: 0.9rem;
-  background-color: #f9f9f9;
-  border: 1px solid #ccc;
+  background: #fff;
   padding: 10px;
-  white-space: pre;
-}
-#varTable {
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-#varTable th, #varTable td {
-  border: 1px solid #aaa;
-  padding: 4px 8px;
-  text-align: center;
-}
-#varTable thead {
-  background-color: #eaeaea;
-  font-weight: bold;
-}
-#bubbleContainer {
-  position: relative;
-  width: 300px;
-  height: 60px;
-  margin: 20px auto;
-}
-.bubble {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  line-height: 50px;
-  text-align: center;
-  color: #fff;
-  font-weight: bold;
-  font-size: 1rem;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-  transition: left 0.5s ease;
-}
-.bubble.active {
-  box-shadow: 0 0 10px 5px rgba(255, 255, 0, 0.8);
-}
-#controls {
-  text-align: center;
-  margin-top: 10px;
-}
-.btn {
-  font-size: 1rem;
-  padding: 8px 16px;
-  margin: 5px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-#prev, #next {
-  background-color: #bdc3c7;
-  color: #fff;
-}
-#start {
-  background-color: #27ae60;
-  color: #fff;
-}
-#stop {
-  background-color: #c0392b;
-  color: #fff;
-}
-.btn:hover:enabled {
-  opacity: 0.8;
-}
-.btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+  border: 1px solid #ccc;
+  font-family: monospace;
+  font-size: 14px;
+  width: fit-content;
 }
 .highlight {
   background-color: #ffff99;
+}
+#tableContainer {
+  margin-left: 20px;
+}
+#bubbleContainer {
+  margin-top: 30px;
+  text-align: center;
+}
+.bubble {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+  margin: 5px;
+  color: #fff;
+  font-weight: bold;
+}
+#controls {
+  text-align: center;
+  margin-top: 20px;
+}
+.btn {
+  padding: 10px;
+  margin: 0 10px;
+  font-size: 16px;
 }
