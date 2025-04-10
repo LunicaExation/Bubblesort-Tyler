@@ -60,11 +60,11 @@ function generateSteps() {
       addStep("compare", i, j, null, a);
       if (a[j] > a[j + 1]) {
         temp = a[j];
-        addStep("highlight_temp", i, j, temp, a);      // zwischenspeicher = zahl[j]
-        addStep("highlight_assign1", i, j, temp, a);   // zahl[j] = zahl[j+1]
-        addStep("highlight_assign2", i, j, temp, a);   // zahl[j+1] = zwischenspeicher
+        addStep("highlight_temp", i, j, temp, a);
+        addStep("highlight_assign1", i, j, temp, a);
+        addStep("highlight_assign2", i, j, temp, a);
         [a[j], a[j + 1]] = [a[j + 1], a[j]];
-        addStep("swap", i, j, temp, a);                // actual visual swap
+        addStep("swap", i, j, temp, a);
       }
     }
   }
@@ -92,8 +92,25 @@ function updateStep(step) {
   val_i.textContent = step.i ?? "-";
   val_j.textContent = step.j ?? "-";
   val_temp.textContent = step.temp ?? "-";
-  val_curr.textContent = step.j != null ? step.array[step.j] : "-";
-  val_next.textContent = step.j != null ? step.array[step.j + 1] : "-";
+
+  if (step.j != null) {
+    if (step.type === "highlight_temp") {
+      val_curr.textContent = step.array[step.j];
+      val_next.textContent = step.array[step.j + 1];
+    } else if (step.type === "highlight_assign1") {
+      val_curr.textContent = step.array[step.j + 1];
+      val_next.textContent = step.array[step.j + 1];
+    } else if (step.type === "highlight_assign2") {
+      val_curr.textContent = step.array[step.j + 1];
+      val_next.textContent = step.temp;
+    } else {
+      val_curr.textContent = step.array[step.j];
+      val_next.textContent = step.array[step.j + 1];
+    }
+  } else {
+    val_curr.textContent = "-";
+    val_next.textContent = "-";
+  }
 
   step.array.forEach((val, i) => {
     bubbles[i].textContent = val;
