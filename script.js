@@ -16,6 +16,7 @@ const codeLines = [
   "    }",
   "}"
 ];
+
 const codeBlock = document.getElementById("codeBlock");
 codeLines.forEach((line, i) => {
   const div = document.createElement("div");
@@ -27,11 +28,12 @@ codeLines.forEach((line, i) => {
 const arr = Array.from({ length: 5 }, () => Math.floor(Math.random() * 900 + 100));
 const container = document.getElementById("bubbleContainer");
 const bubbles = [];
+
 arr.forEach((val, idx) => {
   const b = document.createElement("div");
   b.className = "bubble";
-  b.style.left = (idx * 70) + "px";
   b.style.background = ["#e74c3c","#f39c12","#2ecc71","#3498db","#9b59b6"][idx % 5];
+  b.style.left = (idx * 70) + "px";
   b.textContent = val;
   container.appendChild(b);
   bubbles.push(b);
@@ -53,9 +55,9 @@ function generateSteps() {
   let a = [...arr];
   let temp;
   for (let i = 0; i < a.length - 1; i++) {
-    addStep("line", i, null, null, a); // Zeile 5
+    addStep("line", i, null, null, a);
     for (let j = 0; j < a.length - i - 1; j++) {
-      addStep("compare", i, j, null, a); // Zeile 6, 7
+      addStep("compare", i, j, null, a);
       if (a[j] > a[j + 1]) {
         temp = a[j];
         addStep("swap1", i, j, temp, a);
@@ -67,7 +69,6 @@ function generateSteps() {
     }
   }
 }
-
 generateSteps();
 
 function updateStep(step) {
@@ -89,22 +90,21 @@ function updateStep(step) {
   val_curr.textContent = step.j != null ? step.array[step.j] : "-";
   val_next.textContent = step.j != null ? step.array[step.j + 1] : "-";
 
-  // Update Bubble contents
   step.array.forEach((val, i) => {
     bubbles[i].textContent = val;
   });
 
-  // Animate swaps by updating their left positions
-  if (step.type === "swap3") {
-    let j = step.j;
-    if (j != null) {
-      // swap DOM order + animate
-      let tmp = bubbles[j];
-      bubbles[j] = bubbles[j + 1];
-      bubbles[j + 1] = tmp;
+  // animate visual bubble positions
+  for (let i = 0; i < bubbles.length; i++) {
+    bubbles[i].style.left = (i * 70) + "px";
+  }
 
-      bubbles[j].style.left = (j * 70) + "px";
-      bubbles[j + 1].style.left = ((j + 1) * 70) + "px";
+  if (step.type === "swap3") {
+    const j = step.j;
+    if (j != null) {
+      const tempBubble = bubbles[j];
+      bubbles[j] = bubbles[j + 1];
+      bubbles[j + 1] = tempBubble;
     }
   }
 }
